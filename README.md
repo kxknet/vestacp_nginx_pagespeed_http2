@@ -3,6 +3,7 @@
 Перезаписывает шаблоны default.stpl and default.tpl.  
 Ребилдит конфиг Nginx для всех ваших сайтов.
 # Установка
+    apt-get install sudo
     cd /usr/local/src/
     git clone https://github.com/kxknet/vestacp_nginx_pagespeed_http2.git
     cd vestacp_nginx_pagespeed_http2/
