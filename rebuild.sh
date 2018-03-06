@@ -1,7 +1,10 @@
-﻿#!/bin/bash
+#!/bin/bash
 #http://nginx.org/download/
 #https://developers.google.com/speed/pagespeed/module/
 #https://www.openssl.org/source/
+#https://github.com/Prihod/vestacp_nginx_pagespeed_http2
+#https://ddosov.net great ddos protection forked and patched for you 06.03.2018
+
 
 DEF_OPENSSL_VER=1.1.0g
 DEF_NPS_VERSION=1.12.34.3-stable
@@ -48,14 +51,17 @@ cd nginx-${NGNX_VER}/
 
 echo  "Start download pagespeed"
 #pagespeed module
-wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VERSION}.zip
+wget https://github.com/apache/incubator-pagespeed-ngx/archive/v${NPS_VERSION}.zip
 if [[ $? -ne 0 ]]; then
     echo "Error download pagespeed"
     exit 1; 
 fi
 unzip v${NPS_VERSION}.zip
-cd ngx_pagespeed-${NPS_VERSION}/
-psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
+nps_dir=$(find . -name "*pagespeed-ngx-${NPS_VERSION}" -type d)
+cd "$nps_dir"
+NPS_RELEASE_NUMBER=${NPS_VERSION/beta/}
+NPS_RELEASE_NUMBER=${NPS_VERSION/stable/}
+psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_RELEASE_NUMBER}.tar.gz
 [ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
 
 echo  "Start download PSOL"
@@ -64,7 +70,7 @@ if [[ $? -ne 0 ]]; then
     echo "Error download PSOL"
     exit 1; 
 fi
-tar -xzvf $(basename ${psol_url}) 
+tar -xzvf $(basename ${psol_url})  # extracts to psol/
 cd ..
 
 echo  "Start download openssl"
@@ -87,7 +93,7 @@ make clean
 configure="./configure "
 configure+=$(nginx -V 2>&1 | grep "configure arguments:" | awk -F'configure arguments: ' '{print $2}')
 configure+=" --with-openssl=openssl-${OPENSSL_VER}"
-configure+=" --add-module=ngx_pagespeed-${NPS_VERSION}"
+configure+=" --add-module=$nps_dir"
 echo $configure;
 eval $configure
 
