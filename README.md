@@ -13,5 +13,4 @@
 <https://vestacp.com/>  
 <http://nginx.org/download/>  
 <https://developers.google.com/speed/pagespeed/module/>  
-<https://www.openssl.org/source/> 
 <https://ddosov.net> 
