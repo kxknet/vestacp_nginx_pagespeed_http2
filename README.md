@@ -15,5 +15,3 @@
 <http://nginx.org/download/>  
 <https://developers.google.com/speed/pagespeed/module/>  
 <https://ddosov.net>
-http://mylovecoin.cash
-http://sobre.gamekeys.pro
