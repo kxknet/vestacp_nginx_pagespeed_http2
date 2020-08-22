@@ -9,6 +9,7 @@
     cd vestacp_nginx_pagespeed_http2/
     chmod +x rebuild.sh
     sudo ./rebuild.sh
+Online video    https://github.com/kxknet/watch-video
 Ссылки
 -----------
 <https://vestacp.com/>  
